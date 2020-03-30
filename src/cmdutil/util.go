@@ -39,6 +39,7 @@ type Flags struct {
 	DisableUpdateNotifier bool
 	IgnoredFiles          []string
 	Ignores               []string
+	InverseMatch          bool
 	DisableIgnore         bool
 	NotifyFile            string
 	AllEnvs               bool
@@ -230,6 +231,7 @@ func getFlagEnv(flags Flags) env.Env {
 	if !flags.DisableIgnore {
 		flagEnv.IgnoredFiles = flags.IgnoredFiles
 		flagEnv.Ignores = flags.Ignores
+		flagEnv.InverseMatch = flags.InverseMatch
 	}
 
 	return flagEnv

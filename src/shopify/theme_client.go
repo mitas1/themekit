@@ -101,7 +101,7 @@ type Client struct {
 // channel. The channel is used for logging all events. The configuration specifies how
 // the client will behave.
 func NewClient(e *env.Env) (Client, error) {
-	filter, err := file.NewFilter(e.Directory, e.IgnoredFiles, e.Ignores)
+	filter, err := file.NewFilter(e.Directory, e.IgnoredFiles, e.Ignores, e.InverseMatch)
 	if err != nil {
 		return Client{}, err
 	}

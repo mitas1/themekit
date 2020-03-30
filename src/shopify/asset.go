@@ -40,7 +40,7 @@ func ReadAsset(e *env.Env, filename string) (Asset, error) {
 // read directories recursively. If no paths are passed in then the whole project
 // directory will be read
 func FindAssets(e *env.Env, paths ...string) (assets []string, err error) {
-	filter, err := file.NewFilter(e.Directory, e.IgnoredFiles, e.Ignores)
+	filter, err := file.NewFilter(e.Directory, e.IgnoredFiles, e.Ignores, e.InverseMatch)
 	if err != nil {
 		return []string{}, err
 	}

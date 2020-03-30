@@ -81,7 +81,7 @@ func NewWatcher(e *env.Env, configPath string) (*Watcher, error) {
 }
 
 func filterHook(e *env.Env, configPath string) (watcher.FilterFileHookFunc, error) {
-	filter, err := NewFilter(e.Directory, e.IgnoredFiles, e.Ignores)
+	filter, err := NewFilter(e.Directory, e.IgnoredFiles, e.Ignores, e.InverseMatch)
 	if err != nil {
 		return nil, err
 	}

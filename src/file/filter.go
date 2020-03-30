@@ -32,10 +32,11 @@ type Filter struct {
 	rootDir string
 	regexps []*regexp.Regexp
 	globs   []string
+	inverse bool
 }
 
 // NewFilter will create a new file path filter
-func NewFilter(rootDir string, patterns []string, files []string) (Filter, error) {
+func NewFilter(rootDir string, patterns []string, files []string, inverse bool) (Filter, error) {
 	filePatterns, err := filesToPatterns(files)
 	if err != nil {
 		return Filter{}, err
@@ -51,6 +52,7 @@ func NewFilter(rootDir string, patterns []string, files []string) (Filter, error
 		rootDir: rootDir,
 		regexps: regexps,
 		globs:   globs,
+		inverse: inverse,
 	}, nil
 }
 
@@ -62,14 +64,24 @@ func (f Filter) Match(path string) bool {
 
 	for _, regexp := range f.regexps {
 		if regexp.MatchString(path) {
+			if (f.inverse) {
+				return false
+			}
 			return true
 		}
 	}
 
 	for _, pattern := range f.globs {
 		if glob.Glob(pattern, path) {
+			if (f.inverse) {
+				return false
+			}
 			return true
 		}
+	}
+
+	if (f.inverse) {
+		return true
 	}
 
 	return false
